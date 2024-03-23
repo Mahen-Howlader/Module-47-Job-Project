@@ -1,19 +1,21 @@
 import { useLoaderData, useParams } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { saveData } from "../localstores/script";
 function Jobdetails() {
     const data = useLoaderData()
-    const {id} = useParams()
-console.log(id)
-    const filData = data.find((val) => val.id === parseInt(id))
-    console.log(filData)
-    const {educational_requirements,experiences,job_responsibility,job_description,salary,job_title,contact_information} = filData;
+        const {userClickID} = useParams()
+    const filData = data.find((val) => val.id === parseInt(userClickID))
+    const {id,educational_requirements,experiences,job_responsibility,job_description,salary,job_title,contact_information} = filData;
     const {phone,email,address} = contact_information;
 
 
 
     // applyHandel button 
     function applyHandel (){
-            
+        toast.success("Success apply");
+        saveData(id)
     }
 
     return (
@@ -36,6 +38,7 @@ console.log(id)
                         <button onClick={applyHandel} className="w-full text-center py-2 bg-blue-800 text-2xl font-semibold uppercase rounded-xl text-white">Apply Now</button>
                     </div>
             </div>
+            <ToastContainer autoClose={1000} />
         </div>
     );
 }
